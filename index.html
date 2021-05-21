@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mario</title>
+</head>
+
+<body>
+    <form id="enviar">
+        <textarea id="txtconfig" cols="30" rows="10"></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+        let teams = [];
+
+        const config = document.getElementById("txtconfig");
+        const boton = document.getElementById("enviar");
+        boton.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            await buscar();
+        });
+
+        async function buscar() {
+            let aux = config.value.split(".");
+            aux.forEach((element) => {
+                let team = {
+                    name: "",
+                    members: [],
+                };
+
+                let aux2 = element.split("\n");
+                aux2.forEach((e) => {
+                    GetNameTeam(e, aux2)
+                        ? (team.name = e)
+                        : team.members.push(GetScoreMembers(e));
+
+                });
+                teams.push(team);
+            });
+            teams.forEach((element) => {
+                if (element.name) {
+                    console.log(element)
+                }
+
+
+            });
+        }
+
+        function GetScoreMembers(string) {
+            return string.split(" ");
+        }
+        function GetNameTeam(string, mainstring) {
+            return string == mainstring[0];
+        }
+    </script>
+</body>
+
+</html>
