@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Mario</title>
+    <link href="main.css" />
 </head>
 
 <body>
@@ -16,6 +17,7 @@
 
         const config = document.getElementById("txtconfig");
         const boton = document.getElementById("enviar");
+
         boton.addEventListener("submit", async (e) => {
             e.preventDefault();
             await buscar();
@@ -23,6 +25,7 @@
 
         async function buscar() {
             let aux = config.value.split(".");
+            //Format the value
             aux.forEach((element) => {
                 let team = {
                     name: "",
@@ -34,17 +37,10 @@
                     GetNameTeam(e, aux2)
                         ? (team.name = e)
                         : team.members.push(GetScoreMembers(e));
-
                 });
                 teams.push(team);
             });
-            teams.forEach((element) => {
-                if (element.name) {
-                    console.log(element)
-                }
-
-
-            });
+            await GetScore(teams);
         }
 
         function GetScoreMembers(string) {
@@ -52,6 +48,33 @@
         }
         function GetNameTeam(string, mainstring) {
             return string == mainstring[0];
+        }
+        async function GetScore(teams) {
+            teams.forEach((element) => {
+                if (element.name) {
+                    element.members.forEach((e) => {
+                        let suma = 0;
+                        let i = 0;
+                        e.forEach((puntos) => {
+                            if (i != 0) {
+                                suma += parseInt(puntos)
+                            }
+                            i++
+                        });
+                        console.log(suma);
+                    });
+                }
+            });
+        }
+        function IsNumber(number) {
+            try {
+                var num = parseInt(number);
+                console.log('True')
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
         }
     </script>
 </body>
